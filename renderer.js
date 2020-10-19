@@ -18,10 +18,9 @@ console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong
 let button = document.getElementById("createFolder")
 
 button.addEventListener('click', ()=>{
-    let pathTest = dialog.showOpenDialog({properties:['openDirectory']})
-    let pathName = document.getElementById("myFolder").files[0].path
-    console.log(pathName)
-    console.log(pathTest)
-
+    //Promise
+    dialog.showOpenDialog({properties:['openDirectory']}).then(result => ipcRenderer.send("folderSelection",result))
+    // console.log(pathName)
+    // console.log(pathTest)
     // ipcRenderer.send('folderSelection', pathTest)
 })

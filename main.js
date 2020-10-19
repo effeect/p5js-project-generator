@@ -20,9 +20,16 @@ function createWindow () {
 app.whenReady().then(createWindow)
 
 
-// ipcMain.on('folderSelection', (event, arg) => {
-//   console.log(arg) // prints "ping"
-// })
+ipcMain.on('folderSelection', (event, arg) => {
+  try {
+    let filePath = arg.filePaths[0] //Grabs File Path
+    console.log(filePath);
+  }
+  catch(err)
+  {
+    console.log(err);
+  }
+})
 
 
 app.on('window-all-closed', () => {
