@@ -4,20 +4,24 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+// Some data that will be sent to the main process
+const { ipcRenderer } = require('electron')
+const {dialog} = require('electron').remote;
 
-let RendererPathname;
+console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
 
-document.getElementById('dirs').addEventListener('click', () => {
-    window.postMessage({
-      type: 'select-dirs'
-    })
-    
-  })
+// ipcRenderer.on('asynchronous-reply', (event, arg) => {
+//   console.log(arg) // prints "pong"
+// })
+// ipcRenderer.send('asynchronous-message', 'ping')
 
+let button = document.getElementById("createFolder")
 
-btnCreate = document.getElementById('btnCreate')
-btnCreate.addEventListener('click',function(){
-    //Grabs filename from main
+button.addEventListener('click', ()=>{
+    let pathTest = dialog.showOpenDialog({properties:['openDirectory']})
+    let pathName = document.getElementById("myFolder").files[0].path
+    console.log(pathName)
+    console.log(pathTest)
 
-    console.log("Directory Recieved" + RendererPathname)
+    // ipcRenderer.send('folderSelection', pathTest)
 })
