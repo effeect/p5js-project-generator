@@ -1,3 +1,5 @@
+//REFACTOR NEEDED HERE
+
 const { app, BrowserWindow,ipcMain } = require('electron')
 const fs = require('fs')
 const path = require('path');
@@ -19,7 +21,7 @@ function createWindow () {
   win.loadFile('index.html')
 
   //Opens up the development console by default
-  // win.webContents.openDevTools()
+   win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
@@ -29,12 +31,19 @@ function buildHTML(array){
   filename = "index.html"
   let header = ""
   let body = ""
+
   for(let i = 0; i < array.length; i++)
   {
     if(array[i].value == true)
     {
+      console.log("Path Value : " + path.join(filePath, array[i].link))
+
+      console.log("Array value " + "./" + array[i].link)
+      //Copies the source file to the new array
+      fs.copyFile("./" + array[i].link, path.join(filePath,"/" + array[i].link),(err) => {if(err) throw err;})
+      
       let link = `<script src="${array[i].link}"></script>`
-      console.log("Link Value " + link);
+      console.log("Link Value " + array[i].link);
       header += link;
     }
     else
@@ -61,10 +70,16 @@ ipcMain.on('folderSelection', (event, arg) => {
       if (err) { 
         return console.error(err); 
       }
-      
+    })
+    //Library creation
+    fs.mkdir(path.join(filePath,'/libs'),function(err){
+      if (err){
+        return console.error(err);
+      }
     })
 
     let HTMLContent = buildHTML(arg.values); 
+    console.log(HTMLContent);
 
     fs.writeFile(path.join(filePath,"index.html"),HTMLContent,function (err) {
       if (err) throw err;
