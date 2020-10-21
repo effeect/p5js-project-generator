@@ -8,14 +8,12 @@
 const { ipcRenderer } = require('electron')
 const {dialog} = require('electron').remote;
 
-console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
-
-// ipcRenderer.on('asynchronous-reply', (event, arg) => {
-//   console.log(arg) // prints "pong"
-// })
-// ipcRenderer.send('asynchronous-message', 'ping')
-
+let folderButton = document.getElementById("folderSelect");
 let button = document.getElementById("createFolder");
+
+let readOnlyInput = document.getElementById("filePathShow");
+
+let pathName;
 
 //List of CDNS
 const p5jsLink = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"
@@ -29,6 +27,18 @@ function createP5jsLib(name,value,link){
     };
     return object
 }
+
+//Function to allow for folder selection, cross platform
+folderButton.addEventListener('click', () => {
+    dialog.showOpenDialog({properties:['openDirectory']}).then(result => {
+        //Selects the file path, the folder is not created, it just points
+        pathName = result;
+        readOnlyInput.value = pathName.filePaths[0];
+        console.log(pathName);
+    });
+}
+    
+)
 
 button.addEventListener('click', ()=>{
     //Grabbing Values of
@@ -44,10 +54,9 @@ button.addEventListener('click', ()=>{
     values.push(createP5jsLib("p5js",p5js,p5jsLink));
     values.push(createP5jsLib("p5jsSound",p5jsSound,p5jsSoundLink));
     console.log(values);
+    let data = {path : pathName, solution : fileName, values : values}
 
-
-    dialog.showOpenDialog({properties:['openDirectory']}).then(result => {
-        let data = {path : result, solution : fileName, values : values}
-        ipcRenderer.send("folderSelection",data)
-    })
+    //Sending info to MAIN
+    ipcRenderer.send("folderSelection",data)
 })
+

@@ -7,8 +7,9 @@ let filePath;
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    resizable: false, // Makes the window not resizeable
+    width: 600,
+    height: 1000,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule : true
@@ -18,11 +19,12 @@ function createWindow () {
   win.loadFile('index.html')
 
   //Opens up the development console by default
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
 
+//Builds all the HTML
 function buildHTML(array){
   filename = "index.html"
   let header = ""
@@ -41,6 +43,9 @@ function buildHTML(array){
     }
   }
 
+  //Linking the sketch file
+  header += `<script src="sketch.js"></script>`
+
   return '<!DOCTYPE html>'
   + '<html><head>' + header + '</head><body>' + body + '</body></html>';
 }
@@ -55,17 +60,21 @@ ipcMain.on('folderSelection', (event, arg) => {
     fs.mkdir(filePath,function(err){
       if (err) { 
         return console.error(err); 
-    } 
-    console.log('Directory created successfully!');
-    console.log(buildHTML(arg.values)); 
+      }
+      
     })
 
-    // fs.mkdir(path.join(path.join(filePath,"Test"),"lib")),function(err){
-    //   if(err){
-    //     return console.error(err);
-    //   }
-    //   console.log("Inner Directory created")
-    // }
+    let HTMLContent = buildHTML(arg.values); 
+
+    fs.writeFile(path.join(filePath,"index.html"),HTMLContent,function (err) {
+      if (err) throw err;
+      console.log('File has been created');
+    })
+    fs.writeFile(path.join(filePath,"sketch.js"), "//Sketch.js file",function (err) {
+      if (err) throw err;
+      console.log('File has been created');
+    })
+
 })
 
 app.on('window-all-closed', () => {

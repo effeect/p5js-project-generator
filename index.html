@@ -2,20 +2,108 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>P5JS Project Creator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--CSS FRAMEWORK-->
+    <link rel="stylesheet" href="node_modules/bulma/css/bulma.css">
   </head>
   <body>
-    <center><h1>P5.js Folder Maker</h1></center>
+      <!-- .toolbar-header sits at the top of your app -->
+      <section class="hero is-primary is-bold has-text-centered">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              P5js Project Creator
+            </h1>
+            <h2 class="subtitle">
+              Creates a P5js Project and adds additional libraries.
+            </h2>
+          </div>
+        </div>
+      </section>
 
-    <input id="solutionName" type="text"/>Name of Solution</input>
-    <button id="createFolder" class="btn btn-default">P5.js Create Structure</button>
+      <!-- Project Name -->
+      <div class="column is-two-fifths">
+        <label class="label">Project name</label>
+      <div class="field has-addons is-expanded">
+        <div class="control is-expanded">
+          <input class="input" id="solutionName" value="SolutionName" type="text"/></input>
+          <p class="help">Name of Project</p>
+        </div>
+      </div>
+      </div>
+      <hr>
+      <!-- Folder Path -->
+      <div class="column is-two-fifths">
+        <label class="label">Folder Path</label>
 
-      <!-- P5JS Standard -->
-      <input type="checkbox" id="p5js" name="p5js" value="p5js" checked>
-      <label for="p5js">P5js</label>
-      <!-- P5JS Sound -->
-      <input type="checkbox" id="p5jsSound" name="p5jsSound" value="p5jsSound">
-      <label for="p5js">P5js Sound</label>
+        <div class="field is-grouped">
+          <div class="control is-expanded">
+            <input class="input" id="filePathShow" type="text" value="" placeholder="Select a file path" readonly>
+          </div>
+          <div class="control">
+            <button class="button is-link" id="folderSelect"><label>Select Folder</label></button>
+          </div>
+        </div>
+      </div>
+        
+      <div>
+          
+        </div>
+      </div>
+    <div class="column is-two-fifths">
+      <label class="label">Libraries</label>
+      <div class="field is-grouped is-grouped-center">
+      <table class="table is-fullwidth">
+        <!--FIRST ROW-->
+        <tr>
+          <!-- P5.js Selection-->
+          <td>
+            <label class="checkbox" for="p5js">
+            <input type="checkbox" id="p5js" name="p5js" value="p5js" checked>
+            P5.js
+            </label>
+          </td>
+          <!-- P5.js Sound Selection-->
+          <td>        
+            <label class="checkbox" for="p5jsSound">
+            <input type="checkbox" id="p5jsSound" name="p5jsSound" value="p5jsSound">
+            P5.Sound
+            </label>
+          </td>
+          <!-- -->
+          <td>
+            <label class="checkbox" for="p5jsSound">
+              <input type="checkbox" id="p5jsSound" name="p5jsSound" value="p5jsSound">
+              P5.Accessibility
+              </label>
+
+          </td>
+          <td></td>
+        </tr>
+        <!-- SECOND ROW-->
+        <tr>
+          <td></td>
+        </tr>
+      </table>
+
+      </div>
+      </div>
+
+
+
+      <!--Submit button-->
+      <div class="buttons is-centered">
+        <button class="button is-primary" id="createFolder"><icon name="folder-open"></icon><label>Create Folder</label></button>
+      </div>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          Developed by Oliver Dimes
+        </p>
+      </div>
+    </footer>  
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
   </body>
