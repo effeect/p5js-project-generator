@@ -17,10 +17,12 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@vizuaalog/bulmajs": "^0.11.0",
     "electron": "^8.5.2",
     "xel": "0.0.230"
   },
   "dependencies": {
-    "bulma": "^0.9.1"
+    "bulma": "^0.9.1",
+    "electron-alert": "^0.1.11"
   }
 }

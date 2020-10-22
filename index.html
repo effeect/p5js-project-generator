@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      html,body{ overflow: hidden !important; }
+    </style>
     <meta charset="UTF-8">
     <title>P5JS Project Creator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +35,6 @@
         </div>
       </div>
       </div>
-      <hr>
       <!-- Folder Path -->
       <div class="column is-two-fifths">
         <label class="label">Folder Path</label>
@@ -71,15 +73,8 @@
       <div class="buttons is-centered">
         <button class="button is-primary" id="createFolder"><icon name="folder-open"></icon><label>Create Folder</label></button>
       </div>
-
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>
-          Developed by Oliver Dimes
-        </p>
-      </div>
-    </footer>  
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
   </body>
+
 </html>

@@ -2,6 +2,7 @@ const { ipcRenderer } = require('electron');
 const fs = require('fs');
 const {dialog} = require('electron').remote;
 
+
 //Global Variables
 let folderButton = document.getElementById("folderSelect");
 let button = document.getElementById("createFolder");
@@ -32,26 +33,21 @@ folderButton.addEventListener('click', () => {
         readOnlyInput.value = pathName.filePaths[0];
         console.log(pathName);
     });
-} 
-)
+})
 
 function createOptions(string){
+    //Temp storage
     let temp = "";
     //Formatting HTML Loop
     string.forEach((i) =>{
-        temp += `<td>` + 
+        temp += `<tr><td>` + 
         `<label class="checkbox">` + 
         `<input type="checkbox" id="${i}" name="${i}" value="${i}"> ` + 
         `${i}` + 
-        `</label></td>`
+        `</label></td></tr>`
 
     })
     document.getElementById("tableBody").innerHTML = temp;
-
-    //Loop for data gathering
-
-
-
 }
 
 fs.readdir('./libs', (err, files) => {
@@ -62,28 +58,18 @@ fs.readdir('./libs', (err, files) => {
 button.addEventListener('click', ()=>{
     //Grabbing Values of
     fs.readdir('./libs', (err, files) => {
-        
         files.forEach((i) =>{
             let checkboxValue = document.getElementById(i).checked;
             values.push(createP5jsLib(i,checkboxValue,`libs/${i}`))
         })
-
+        
         var fileName = document.getElementById("solutionName").value;
         let data = {path : pathName, solution : fileName, values : values}
         console.log("Values : " + values.length);
         //Sending info to MAIN
-        ipcRenderer.send("folderSelection",data)
+        ipcRenderer.send("folderSelection",data);
       });
-
-    
-    // //Grab values of documents
-    // var p5js = document.getElementById("p5js").checked;
-    // var p5jsSound = document.getElementById("p5jsSound").checked;
-
-    // //Formatting into objects, need to be reworked to allow for 
-    // values.push(createP5jsLib("p5js",p5js,p5jsLink));
-    // values.push(createP5jsLib("p5jsSound",p5jsSound,p5jsSoundLink));
-    
+  
 
 })
 
